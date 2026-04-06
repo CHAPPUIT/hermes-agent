@@ -1,0 +1,28 @@
+name: maestro
+version: 2.0.0
+description: OKE business tools + Trust Layer for Hermes Agent — accounting, payroll, fiscal operations
+author: Yann Chappuit
+provides_tools:
+  - oke_query_balances
+  - oke_query_ledger
+  - oke_query_entries
+  - oke_create_entries
+  - oke_get_bilan
+  - oke_get_pnl
+  - oke_list_employees
+  - oke_get_employee
+  - oke_calculate_payslips
+  - oke_list_payslips
+  - oke_get_payslip
+  - oke_generate_dsn
+  - oke_validate_dsn
+  - oke_list_fiscal_declarations
+  - oke_prefill_declaration
+  - oke_payroll_dashboard
+  - oke_list_absences
+  - oke_scan_fiscal_alerts
+provides_hooks:
+  - pre_tool_call
+  - on_session_start
+requires_env:
+  - OKE_API_URL

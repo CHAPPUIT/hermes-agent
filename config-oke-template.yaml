@@ -1,0 +1,76 @@
+# Hermes Agent — Configuration OKE
+# Copier dans ~/.hermes/config.yaml
+
+# Modèle par défaut : Gemma 4 sur OVH (gratuit)
+model:
+  default: "gemma4:e4b"
+  provider: custom
+  base_url: "http://79.137.54.148:11434/v1"
+  context_length: 131072
+
+# Smart routing : Gemma pour les questions simples, Claude pour le complexe
+smart_model_routing:
+  enabled: true
+  cheap_model: "gemma4:e4b"
+
+# Fallback : si Gemma échoue, basculer sur Claude
+fallback_providers:
+  - provider: custom
+    model: "gemma4:e4b"
+    base_url: "http://79.137.54.148:11434/v1"
+  - provider: anthropic
+    model: "claude-sonnet-4-20250514"
+
+# Trust proxy (chantier 3) — décommenter quand le proxy est actif
+# model:
+#   provider: custom
+#   base_url: "http://localhost:8888/v1"
+
+# Agent
+agent:
+  max_turns: 90
+
+# Compression
+compression:
+  enabled: true
+  threshold: 0.50
+  target_ratio: 0.20
+
+# Skills OKE (external dir)
+skills:
+  external_dirs:
+    - ~/HERMES-AGENT/skills/oke
+
+# Memory
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  # provider: oke  # Chantier 6 — décommenter quand le provider OKE est prêt
+
+# Terminal
+terminal:
+  backend: local
+  timeout: 180
+
+# Affichage
+display:
+  skin: default
+  tool_progress: true
+  show_reasoning: false
+  show_cost: true
+
+# Sécurité
+security:
+  tirith_enabled: true
+
+# Delegation (subagents)
+delegation:
+  model: "gemma4:e4b"
+  provider: custom
+  max_iterations: 50
+
+# Credential pools (si plusieurs clés API)
+# credential_pools:
+#   anthropic:
+#     - key: ${ANTHROPIC_API_KEY_1}
+#     - key: ${ANTHROPIC_API_KEY_2}
