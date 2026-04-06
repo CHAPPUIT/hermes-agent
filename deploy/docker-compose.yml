@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  hermes:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-oke
+    restart: unless-stopped
+    command: gateway run
+    network_mode: host
+    volumes:
+      - ./data:/opt/data
+      - ./plugins/maestro:/opt/data/plugins/maestro:ro
+      - ./skills/oke:/opt/data/external-skills/oke:ro
+    environment:
+      - HERMES_HOME=/opt/data
+      # API Server (OpenAI-compatible for OKE frontend)
+      - API_SERVER_ENABLED=true
+      - API_SERVER_PORT=8642
+      - API_SERVER_HOST=0.0.0.0
+      - API_SERVER_KEY=${HERMES_API_KEY}
+      - API_SERVER_CORS_ORIGINS=https://app.oke.fr,https://oke.chappuit.com
+      # OKE Backend
+      - OKE_API_URL=${OKE_API_URL}
+      - OKE_API_KEY=${OKE_API_KEY}
+      - OKE_TENANT_ID=${OKE_TENANT_ID}
+      - OKE_COMPANY_ID=${OKE_COMPANY_ID}
+      # LLM Providers
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # Gateway platforms
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GATEWAY_ALLOW_ALL_USERS=false
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: "2.0"
