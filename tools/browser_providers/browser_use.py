@@ -14,7 +14,7 @@ from tools.tool_backend_helpers import managed_nous_tools_enabled
 
 logger = logging.getLogger(__name__)
 
-_DIRECT_BASE_URL = "https://api.browser-use.com/api/v2"
+_DIRECT_BASE_URL = "https://api.browser-use.com/api/v3"
 _DEFAULT_MANAGED_TIMEOUT_MINUTES = 5
 _DEFAULT_MANAGED_PROXY_COUNTRY_CODE = "us"
 _pending_create_keys: Dict[str, str] = {}
