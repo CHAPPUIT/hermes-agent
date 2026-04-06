@@ -279,7 +279,8 @@ async def openai_proxy(request: Request):
             log.info("Anonymized %d entities before forwarding", len(entity_map))
 
     # Build upstream request
-    target = f"{base_url.rstrip('/')}/v1/chat/completions"
+    base = base_url.rstrip("/")
+    target = f"{base}/chat/completions" if base.endswith("/v1") else f"{base}/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
         **auth_headers,
@@ -356,7 +357,8 @@ async def anthropic_proxy(request: Request):
             log.info("Anonymized %d entities before forwarding", len(entity_map))
 
     # Build upstream request
-    target = f"{base_url.rstrip('/')}/v1/messages"
+    base = base_url.rstrip("/")
+    target = f"{base}/messages" if base.endswith("/v1") else f"{base}/v1/messages"
 
     # Anthropic requires specific headers
     headers = {
